@@ -18,4 +18,4 @@ commands:
   setcost:
     description: Set the bare buy cost of a material
   itemshop:
-    description: Main ItemShop command
+    description: Reloads the config file

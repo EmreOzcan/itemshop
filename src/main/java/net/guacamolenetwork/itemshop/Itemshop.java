@@ -1,7 +1,7 @@
 package net.guacamolenetwork.itemshop;
 
 import co.aikar.commands.PaperCommandManager;
-import net.guacamolenetwork.itemshop.commands.MainCommand;
+import net.guacamolenetwork.itemshop.commands.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -37,7 +37,11 @@ public final class Itemshop extends JavaPlugin {
                         .collect(Collectors.toList())
         );
         commandManager.enableUnstableAPI("help");
-        commandManager.registerCommand(new MainCommand(this));
+        commandManager.registerCommand(new BuyCommand(this));
+        commandManager.registerCommand(new CostCommand(this));
+        commandManager.registerCommand(new SellCommand(this));
+        commandManager.registerCommand(new WorthCommand(this));
+        commandManager.registerCommand(new ReloadCommand(this));
     }
 
     private boolean setupEconomy() {
