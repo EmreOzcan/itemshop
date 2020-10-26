@@ -1,5 +1,7 @@
 package net.guacamolenetwork.itemshop.classes;
 
+import net.guacamolenetwork.itemshop.Itemshop;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -74,5 +76,30 @@ public class Multiplier {
             }
         }
         return selectedMultiplier;
+    }
+
+    public static void listMultipliers(Player player, Itemshop plugin) {
+        FileConfiguration config = plugin.getConfig();
+        Multiplier sell = Multiplier.sellBest(player, config);
+        Multiplier buy = Multiplier.buyBest(player, config);
+
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYour multipliers:"));
+        if (player.hasPermission("itemshop.sell")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
+                    "&aSell multiplier: &c%.2fx%s",
+                    sell.getMultiplier(),
+                    !sell.getName().equals("") ? "&a (&c"+sell.getName()+"&a)": ""
+            )));
+        }
+        if (player.hasPermission("itemshop.buy")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
+                    "&aBuy multiplier: &c%.2fx%s",
+                    buy.getMultiplier(),
+                    !buy.getName().equals("") ? "&a (&c"+sell.getName()+"&a)": ""
+            )));
+        }
+        if (!player.hasPermission("itemshop.buy") && !player.hasPermission("itemshop.sell")) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou do not have any multipliers."));
+        }
     }
 }
