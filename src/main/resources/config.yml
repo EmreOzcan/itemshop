@@ -1,0 +1,31 @@
+# Configuration file for Itemshop
+
+modifiers:
+  # Example: Players with the permission "itemshop.m.free" will buy everything for free.
+  # (Item's buy cost is multiplied with "0.0".)
+  free:
+    name: "Communism"
+    buy: 0.0
+  # Another example: Player with the permission "itemshop.m.tax" will sell items for 10% less and buy items for 10% more.
+  # (Item's buy cost is multiplied with "1.1" and sell value is multiplied with "0.9".)
+  tax:
+    name: "Tax"
+    sell: 0.9
+    buy: 1.1
+  # Players without any of these permissions will sell and buy items with the default multiplier of "1.0".
+  # If you don't add a sell or buy for a modifier it will be assumed to be 1.
+
+item-worths:
+  # Players will be able to sell stone for 0.8 each and buy it for 1.0 each.
+  stone:
+    sell: 0.8
+    buy: 1.0
+  # Players will be able to sell diorite for 3 but they cannot buy it.
+  diorite:
+    sell: 3.0
+    buy:
+  # Players will be able to buy andesite for 7 each but they cannot sell it.
+  andesite:
+    sell:
+    buy: 7.0
+  # Items not here cannot be sold or bought by default.

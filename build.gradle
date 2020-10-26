@@ -1,0 +1,59 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'java'
+}
+
+apply plugin: 'java'
+
+group = 'net.guacamolenetwork'
+version = '1.2'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc-repo'
+        url = 'https://papermc.io/repo/repository/maven-public/'
+    }
+    maven {
+        name = 'sonatype'
+        url = 'https://oss.sonatype.org/content/groups/public/'
+    }
+    maven {
+        name = 'vault'
+        url = 'https://jitpack.io'
+    }
+    maven {
+        name = 'acf'
+        url = 'https://repo.aikar.co/content/groups/aikar/'
+    }
+}
+
+dependencies {
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.3-R0.1-SNAPSHOT'
+    compileOnly 'com.github.MilkBowl:VaultAPI:1.7'
+    compile 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
+}
+
+shadowJar {
+    relocate 'co.aikar.commands', 'net.guacamolenetwork.itemshop.acf'
+    relocate 'co.aikar.locales', 'net.guacamolenetwork.itemshop.locales'
+}
+
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = "javac"
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+build.dependsOn shadowJar

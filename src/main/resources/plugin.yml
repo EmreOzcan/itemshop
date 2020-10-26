@@ -1,0 +1,21 @@
+name: Itemshop
+version: @version@
+main: net.guacamolenetwork.itemshop.Itemshop
+api-version: 1.16
+depend:
+  - Vault
+commands:
+  sell:
+    description: Sell items
+  worth:
+    description: Calculate the sell worth of items as specified
+  setworth:
+    description: Set the bare sell worth of a material
+  buy:
+    description: Buy items
+  cost:
+    description: Calculate the buy cost of items as specified
+  setcost:
+    description: Set the bare buy cost of a material
+  itemshop:
+    description: Main ItemShop command
