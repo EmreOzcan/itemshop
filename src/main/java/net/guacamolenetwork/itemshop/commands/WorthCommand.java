@@ -5,7 +5,7 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import net.guacamolenetwork.itemshop.Itemshop;
 import net.guacamolenetwork.itemshop.classes.ItemValues;
-import net.guacamolenetwork.itemshop.classes.Multiplier;
+import net.guacamolenetwork.itemshop.classes.SellMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 @CommandPermission("itemshop.sell.worth")
 @CommandAlias("worth")
 public class WorthCommand extends BaseCommand {
-    Itemshop plugin;
+    final Itemshop plugin;
 
     public WorthCommand(Itemshop plugin) {
         this.plugin = plugin;
@@ -32,7 +32,7 @@ public class WorthCommand extends BaseCommand {
             material = player.getInventory().getItemInMainHand().getType();
         }
         ItemValues itemValues = ItemValues.getFor(material, config);
-        Multiplier multiplier = sender instanceof Player ? Multiplier.sellBest(((Player) sender), config) : Multiplier.getDefault();
+        SellMultiplier multi = sender instanceof Player ? SellMultiplier.best(((Player) sender), config) : SellMultiplier.unit;
 
         if (!itemValues.isSellable()) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be sold."));
@@ -45,9 +45,9 @@ public class WorthCommand extends BaseCommand {
                 "&c%d&a of &c%s&a is worth &c$%.2f&a (&c$%.2f&a each)%s&a.",
                 amount,
                 material.name(),
-                worth * amount * multiplier.getMultiplier(),
-                worth * multiplier.getMultiplier(),
-                multiplier.getMultiplier() != 1 ? String.format(" (&c%.2fx %s&a)", multiplier.getMultiplier(), !multiplier.getName().equals("") ? multiplier.getName() : "multiplier") : ""
+                worth * amount * multi.getMultiplier(),
+                worth * multi.getMultiplier(),
+                multi.getMultiplier() != 1 ? String.format(" (&c%.2fx %s&a)", multi.getMultiplier(), !multi.getName().equals("") ? multi.getName() : "multiplier") : ""
         )));
     }
 

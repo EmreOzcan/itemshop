@@ -6,11 +6,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.Locale;
 
 public class ItemValues {
-    private Material material;
-    private boolean isSellable;
-    private double sellWorth;
-    private boolean isBuyable;
-    private double buyCost;
+    private final Material material;
+    private final boolean isSellable;
+    private final double sellWorth;
+    private final boolean isBuyable;
+    private final double buyCost;
 
     public Material getMaterial() {
         return material;

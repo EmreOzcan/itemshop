@@ -5,7 +5,7 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import net.guacamolenetwork.itemshop.Itemshop;
 import net.guacamolenetwork.itemshop.classes.ItemValues;
-import net.guacamolenetwork.itemshop.classes.Multiplier;
+import net.guacamolenetwork.itemshop.classes.SellMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 @CommandPermission("itemshop.sell")
 @CommandAlias("sell")
 public class SellCommand extends BaseCommand {
-    Itemshop plugin;
+    final Itemshop plugin;
 
     public SellCommand(Itemshop plugin) {
         this.plugin = plugin;
@@ -41,7 +41,7 @@ public class SellCommand extends BaseCommand {
     public void onInventory(Player player) {
         PlayerInventory inventory = player.getInventory();
         FileConfiguration config = plugin.getConfig();
-        Multiplier sellMultiplier = Multiplier.sellBest(player, config);
+        SellMultiplier multi = SellMultiplier.best(player, config);
 
         int totalItemsSold = 0;
         double totalWorthOfItems = 0.0;
@@ -53,7 +53,7 @@ public class SellCommand extends BaseCommand {
             if (!itemValues.isSellable()) {
                 continue;
             }
-            totalWorthOfItems += itemValues.getSellWorth() * sellMultiplier.getMultiplier() * stack.getAmount();
+            totalWorthOfItems += itemValues.getSellWorth() * multi.getMultiplier() * stack.getAmount();
             totalItemsSold += stack.getAmount();
             stack.setAmount(0);
         }
@@ -80,7 +80,7 @@ public class SellCommand extends BaseCommand {
     public void onMaterial(Player player, Material material, @Default("2147483647") Integer maxAmount) {
         PlayerInventory inventory = player.getInventory();
         FileConfiguration config = plugin.getConfig();
-        Multiplier sellMultiplier = Multiplier.sellBest(player, config);
+        SellMultiplier multi = SellMultiplier.best(player, config);
         ItemValues itemValues = ItemValues.getFor(material, config);
 
         if (!itemValues.isSellable()) {
@@ -88,7 +88,7 @@ public class SellCommand extends BaseCommand {
             return;
         }
 
-        double sellPrice = itemValues.getSellWorth() * sellMultiplier.getMultiplier();
+        double sellPrice = itemValues.getSellWorth() * multi.getMultiplier();
 
         int soldItems = removeAndCount(inventory, material, maxAmount);
         double total = sellPrice * soldItems;
@@ -104,7 +104,7 @@ public class SellCommand extends BaseCommand {
     @CommandPermission("itemshop.multipliers")
     @Description("See active multipliers")
     public void onMultipliers(Player player) {
-        Multiplier.listMultipliers(player, plugin);
+        SellMultiplier.listMultipliers(player, plugin);
     }
 
     @HelpCommand

@@ -4,8 +4,8 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import net.guacamolenetwork.itemshop.Itemshop;
+import net.guacamolenetwork.itemshop.classes.BuyMultiplier;
 import net.guacamolenetwork.itemshop.classes.ItemValues;
-import net.guacamolenetwork.itemshop.classes.Multiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -21,13 +21,13 @@ import java.util.HashMap;
 @CommandAlias("buy")
 public class BuyCommand extends BaseCommand {
 
-    Itemshop plugin;
+    final Itemshop plugin;
 
     public BuyCommand(Itemshop plugin) {
         this.plugin = plugin;
     }
 
-    private int getAvaliableSlots(Inventory inv){
+    private int getAvailableSlots(Inventory inv){
         int empty = 0;
         for (ItemStack item: inv.getContents()) {
             if(item == null) {
@@ -52,7 +52,7 @@ public class BuyCommand extends BaseCommand {
     public void onMaterial(Player player, Material material, @Default("1") Integer amount) {
         PlayerInventory inventory = player.getInventory();
         FileConfiguration config = plugin.getConfig();
-        Multiplier buyMultiplier = Multiplier.buyBest(player, config);
+        BuyMultiplier multi = BuyMultiplier.best(player, config);
         ItemValues itemValues = ItemValues.getFor(material, config);
 
         if (!itemValues.isBuyable()) {
@@ -60,12 +60,12 @@ public class BuyCommand extends BaseCommand {
             return;
         }
 
-        double buyPrice = itemValues.getBuyCost() * buyMultiplier.getMultiplier();
+        double buyPrice = itemValues.getBuyCost() * multi.getMultiplier();
         double total = buyPrice * amount;
         if (Itemshop.getEconomy().has(player, total)) {
             int requiredSlots = (int) (Math.ceil((double) amount)/ ((double) material.getMaxStackSize()));
-            int avaliableSlots = getAvaliableSlots(inventory);
-            if (avaliableSlots >= requiredSlots) {
+            int availableSlots = getAvailableSlots(inventory);
+            if (availableSlots >= requiredSlots) {
                 HashMap<Integer, ItemStack> failedItems = inventory.addItem(new ItemStack(material, amount));
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
@@ -88,7 +88,7 @@ public class BuyCommand extends BaseCommand {
             } else {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
                         "&cYou need to have %d available inventory slots for this but you only have %d.",
-                        requiredSlots, avaliableSlots)));
+                        requiredSlots, availableSlots)));
             }
         }
     }
@@ -97,7 +97,7 @@ public class BuyCommand extends BaseCommand {
     @CommandPermission("itemshop.multipliers")
     @Description("See active multipliers")
     public void onMultipliers(Player player) {
-        Multiplier.listMultipliers(player, plugin);
+        BuyMultiplier.listMultipliers(player, plugin);
     }
 
     @HelpCommand

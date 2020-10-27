@@ -12,7 +12,7 @@ import org.bukkit.command.CommandSender;
 @Description("Reloads the config file")
 @CommandAlias("itemshop")
 public class ReloadCommand extends BaseCommand {
-    Itemshop plugin;
+    final Itemshop plugin;
 
     public ReloadCommand(Itemshop plugin) {
         this.plugin = plugin;

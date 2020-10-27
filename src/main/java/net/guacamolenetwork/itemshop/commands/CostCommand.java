@@ -4,8 +4,8 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import net.guacamolenetwork.itemshop.Itemshop;
+import net.guacamolenetwork.itemshop.classes.BuyMultiplier;
 import net.guacamolenetwork.itemshop.classes.ItemValues;
-import net.guacamolenetwork.itemshop.classes.Multiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 @CommandPermission("itemshop.buy.cost")
 @CommandAlias("cost")
 public class CostCommand extends BaseCommand {
-    Itemshop plugin;
+    final Itemshop plugin;
 
     public CostCommand(Itemshop plugin) {
         this.plugin = plugin;
@@ -32,7 +32,7 @@ public class CostCommand extends BaseCommand {
             material = player.getInventory().getItemInMainHand().getType();
         }
         ItemValues itemValues = ItemValues.getFor(material, config);
-        Multiplier multiplier = sender instanceof Player ? Multiplier.buyBest(((Player) sender), config) : Multiplier.getDefault();
+        BuyMultiplier multi = sender instanceof Player ? BuyMultiplier.best(((Player) sender), config) : BuyMultiplier.unit;
 
         if (!itemValues.isBuyable()) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be bought."));
@@ -45,9 +45,9 @@ public class CostCommand extends BaseCommand {
                 "&c%d&a of &c%s&a costs &c$%.2f&a (&c$%.2f&a each)%s&a.",
                 amount,
                 material.name(),
-                cost * amount * multiplier.getMultiplier(),
-                cost * multiplier.getMultiplier(),
-                multiplier.getMultiplier() != 1 ? String.format(" (&c%.2fx %s&a)", multiplier.getMultiplier(), !multiplier.getName().equals("") ? multiplier.getName() : "multiplier") : ""
+                cost * amount * multi.getMultiplier(),
+                cost * multi.getMultiplier(),
+                multi.getMultiplier() != 1 ? String.format(" (&c%.2fx %s&a)", multi.getMultiplier(), !multi.getName().equals("") ? multi.getName() : "multiplier") : ""
         )));
     }
 
