@@ -1,7 +1,7 @@
-package net.guacamolenetwork.itemshop;
+package jschars.itemshop;
 
 import co.aikar.commands.PaperCommandManager;
-import net.guacamolenetwork.itemshop.commands.*;
+import jschars.itemshop.commands.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.plugin.RegisteredServiceProvider;

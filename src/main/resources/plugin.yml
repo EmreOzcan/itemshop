@@ -1,6 +1,6 @@
 name: Itemshop
 version: @version@
-main: net.guacamolenetwork.itemshop.Itemshop
+main: jschars.itemshop.Itemshop
 api-version: 1.16
 depend:
   - Vault

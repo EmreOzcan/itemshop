@@ -7,8 +7,8 @@ plugins {
 
 apply plugin: 'java'
 
-group = 'net.guacamolenetwork'
-version = '1.2'
+group = 'jschars'
+version = '1.3'
 
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
@@ -40,8 +40,8 @@ dependencies {
 }
 
 shadowJar {
-    relocate 'co.aikar.commands', 'net.guacamolenetwork.itemshop.acf'
-    relocate 'co.aikar.locales', 'net.guacamolenetwork.itemshop.locales'
+    relocate 'co.aikar.commands', 'jschars.itemshop.acf'
+    relocate 'co.aikar.locales', 'jschars.itemshop.locales'
 }
 
 compileJava {

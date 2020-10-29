@@ -1,4 +1,4 @@
-package net.guacamolenetwork.itemshop.classes;
+package jschars.itemshop.classes;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

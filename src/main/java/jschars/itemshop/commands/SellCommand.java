@@ -1,11 +1,11 @@
-package net.guacamolenetwork.itemshop.commands;
+package jschars.itemshop.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
-import net.guacamolenetwork.itemshop.Itemshop;
-import net.guacamolenetwork.itemshop.classes.ItemValues;
-import net.guacamolenetwork.itemshop.classes.SellMultiplier;
+import jschars.itemshop.Itemshop;
+import jschars.itemshop.classes.ItemValues;
+import jschars.itemshop.classes.SellMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;

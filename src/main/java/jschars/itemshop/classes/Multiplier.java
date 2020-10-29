@@ -1,6 +1,6 @@
-package net.guacamolenetwork.itemshop.classes;
+package jschars.itemshop.classes;
 
-import net.guacamolenetwork.itemshop.Itemshop;
+import jschars.itemshop.Itemshop;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
