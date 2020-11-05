@@ -1,7 +1,7 @@
 name: Itemshop
 version: @version@
 main: jschars.itemshop.Itemshop
-api-version: 1.16
+api-version: 1.15
 depend:
   - Vault
 commands:
