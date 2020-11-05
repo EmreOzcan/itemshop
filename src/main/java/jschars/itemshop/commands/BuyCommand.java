@@ -55,7 +55,10 @@ public class BuyCommand extends BaseCommand {
         ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
 
         if (!itemValues.isBuyable()) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be bought."));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
+                    "&c%s cannot be bought.",
+                    material.name()
+            )));
             return;
         }
 

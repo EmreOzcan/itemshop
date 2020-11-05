@@ -5,7 +5,6 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
 import jschars.itemshop.compat.OffhandCompat;
-import jschars.itemshop.config.MultiplierConfig;
 import jschars.itemshop.config.ValueConfig;
 import jschars.itemshop.itemdata.ItemValues;
 import jschars.itemshop.multiplier.SellMultiplier;
@@ -28,17 +27,23 @@ public class WorthCommand extends BaseCommand {
     @CommandCompletion("@itemshop-sellables 1|32|64")
     @Default
     public void onWorth(CommandSender sender, @Optional Material material, @Default("1") Integer amount) {
-        ValueConfig valueConfig = plugin.getValueConfig();
-        MultiplierConfig multiplierConfig = plugin.getMultiplierConfig();
-        if (material == null && sender instanceof Player) {
-            Player player = (Player) sender;
-            material = OffhandCompat.getItemInMainHand(player).getType();
+        if (material == null) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                material = OffhandCompat.getItemInMainHand(player).getType();
+            } else {
+                sender.sendMessage(ChatColor.RED+"Console must specify material");
+                return;
+            }
         }
-        ItemValues itemValues = ItemValues.getFor(material, valueConfig);
-        SellMultiplier multi = sender instanceof Player ? SellMultiplier.best(((Player) sender), multiplierConfig) : SellMultiplier.unit;
+        ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
+        SellMultiplier multi = sender instanceof Player ? SellMultiplier.best(((Player) sender), plugin.getMultiplierConfig()) : SellMultiplier.unit;
 
         if (!itemValues.isSellable()) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be sold."));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
+                    "&c%s cannot be sold.",
+                    material.name()
+            )));
             return;
         }
 
@@ -72,24 +77,4 @@ public class WorthCommand extends BaseCommand {
     public void doHelp(CommandSender sender, CommandHelp help) {
         help.showHelp();
     }
-
-    /*@CommandPermission("itemshop.sell.worth.missing")
-    @Description("List all unsellable items")
-    @Subcommand("missing")
-    public void onMissingWorth(CommandSender sender) {
-        FileConfiguration config = plugin.getConfig();
-        List<String> missingMaterials = EnumSet.allOf(Material.class).stream()
-                .filter(Material::isItem)
-                .filter(mat -> !config.isDouble(ItemValues.getWorthPath(mat)))
-                .map(Material::name)
-                .collect(Collectors.toList());
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
-                "&aFound &c%d&a materials with no sell worth:",
-                missingMaterials.size())));
-        for (String materialName : missingMaterials) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
-                    "&a- %s",
-                    materialName)));
-        }
-    }*/
 }

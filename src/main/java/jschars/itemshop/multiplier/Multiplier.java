@@ -27,9 +27,9 @@ class Multiplier {
     }
 
     public static void listMultipliers(Player player, Itemshop plugin) {
-        MultiplierConfig config = plugin.getMultiplierConfig();
-        SellMultiplier sell = SellMultiplier.best(player, config);
-        BuyMultiplier buy = BuyMultiplier.best(player, config);
+        MultiplierConfig pluginMultiplierConfig = plugin.getMultiplierConfig();
+        SellMultiplier sell = SellMultiplier.best(player, pluginMultiplierConfig);
+        BuyMultiplier buy = BuyMultiplier.best(player, pluginMultiplierConfig);
 
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYour multipliers:"));
         if (player.hasPermission("itemshop.sell")) {

@@ -27,15 +27,23 @@ public class CostCommand extends BaseCommand {
     @CommandCompletion("@itemshop-buyables 1|32|64")
     @Default
     public void onCost(CommandSender sender, @Optional Material material, @Default("1") Integer amount) {
-        if (material == null && sender instanceof Player) {
-            Player player = (Player) sender;
-            material = OffhandCompat.getItemInMainHand(player).getType();
+        if (material == null) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                material = OffhandCompat.getItemInMainHand(player).getType();
+            } else {
+                sender.sendMessage(ChatColor.RED+"Console must specify material");
+                return;
+            }
         }
         ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
         BuyMultiplier multi = sender instanceof Player ? BuyMultiplier.best(((Player) sender), plugin.getMultiplierConfig()) : BuyMultiplier.unit;
 
         if (!itemValues.isBuyable()) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be bought."));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
+                    "&c%s cannot be bought.",
+                    material.name()
+            )));
             return;
         }
 
@@ -69,24 +77,4 @@ public class CostCommand extends BaseCommand {
     public void doHelp(CommandSender sender, CommandHelp help) {
         help.showHelp();
     }
-
-    /*@CommandPermission("itemshop.sell.worth.missing")
-    @Description("List all unbuyable items")
-    @Subcommand("missing")
-    public void onMissingCost(CommandSender sender) {
-        FileConfiguration config = plugin.getConfig();
-        List<String> missingMaterials = EnumSet.allOf(Material.class).stream()
-                .filter(Material::isItem)
-                .filter(mat -> !config.isDouble(ItemValues.getCostPath(mat)))
-                .map(Material::name)
-                .collect(Collectors.toList());
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
-                "&aFound &c%d&a materials with no buy cost:",
-                missingMaterials.size())));
-        for (String materialName : missingMaterials) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
-                    "&a- %s",
-                    materialName)));
-        }
-    }*/
 }

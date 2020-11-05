@@ -82,7 +82,10 @@ public class SellCommand extends BaseCommand {
         ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
 
         if (!itemValues.isSellable()) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be sold."));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
+                    "&c%s cannot be sold.",
+                    material.name()
+            )));
             return;
         }
 

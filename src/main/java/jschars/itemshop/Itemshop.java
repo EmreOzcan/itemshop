@@ -8,6 +8,7 @@ import jschars.itemshop.config.ValueConfig;
 import jschars.itemshop.itemdata.ItemValues;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
@@ -128,5 +129,17 @@ public final class Itemshop extends JavaPlugin {
         valueConfig = new ValueConfig(this, "item-values.yml");
         multiplierConfig = new MultiplierConfig(this, "multipliers.yml");
         //super.saveDefaultConfig();
+    }
+
+    @Override
+    @Deprecated
+    public FileConfiguration getConfig() {
+        return super.getConfig();
+    }
+
+    @Override
+    @Deprecated
+    public void saveConfig() {
+        super.saveConfig();
     }
 }
