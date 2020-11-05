@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
 import jschars.itemshop.classes.ItemValues;
 import jschars.itemshop.classes.SellMultiplier;
+import jschars.itemshop.compat.OffhandCompat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class WorthCommand extends BaseCommand {
         FileConfiguration config = plugin.getConfig();
         if (material == null && sender instanceof Player) {
             Player player = (Player) sender;
-            material = player.getInventory().getItemInMainHand().getType();
+            material = OffhandCompat.getItemInMainHand(player).getType();
         }
         ItemValues itemValues = ItemValues.getFor(material, config);
         SellMultiplier multi = sender instanceof Player ? SellMultiplier.best(((Player) sender), config) : SellMultiplier.unit;

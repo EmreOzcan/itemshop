@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
 import jschars.itemshop.classes.BuyMultiplier;
 import jschars.itemshop.classes.ItemValues;
+import jschars.itemshop.compat.OffhandCompat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class CostCommand extends BaseCommand {
         FileConfiguration config = plugin.getConfig();
         if (material == null && sender instanceof Player) {
             Player player = (Player) sender;
-            material = player.getInventory().getItemInMainHand().getType();
+            material = OffhandCompat.getItemInMainHand(player).getType();
         }
         ItemValues itemValues = ItemValues.getFor(material, config);
         BuyMultiplier multi = sender instanceof Player ? BuyMultiplier.best(((Player) sender), config) : BuyMultiplier.unit;
@@ -56,13 +57,13 @@ public class CostCommand extends BaseCommand {
     @CommandCompletion("@itemMaterials 1.00|1.50|75")
     @Subcommand("set")
     @CommandAlias("setcost")
-    public void onSetCost(CommandSender sender, Material material, double worth) {
+    public void onSetCost(CommandSender sender, Material material, double cost) {
         FileConfiguration config = plugin.getConfig();
-        config.set(ItemValues.getCostPath(material), worth);
+        config.set(ItemValues.getCostPath(material), cost);
         plugin.saveConfig();
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
                 "&aUpdated the buy cost of &a%s&a to &c$%.2f&a.",
-                material.name(), worth)));
+                material.name(), cost)));
     }
 
     @HelpCommand

@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
 import jschars.itemshop.classes.ItemValues;
 import jschars.itemshop.classes.SellMultiplier;
+import jschars.itemshop.compat.OffhandCompat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -70,7 +71,7 @@ public class SellCommand extends BaseCommand {
     @Description("Sell items of the type you're currently holding")
     @CommandCompletion("1|32|64")
     public void onHand(Player player, @Default("2147483647") Integer maxAmount) {
-        onMaterial(player, player.getInventory().getItemInMainHand().getType(), maxAmount);
+        onMaterial(player, OffhandCompat.getItemInMainHand(player).getType(), maxAmount);
     }
 
     @Subcommand("material")

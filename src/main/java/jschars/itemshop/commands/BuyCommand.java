@@ -6,6 +6,7 @@ import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
 import jschars.itemshop.classes.BuyMultiplier;
 import jschars.itemshop.classes.ItemValues;
+import jschars.itemshop.compat.OffhandCompat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -42,7 +43,7 @@ public class BuyCommand extends BaseCommand {
     @Description("Buy items of the type you're currently holding")
     @CommandCompletion("1|32|64")
     public void onHand(Player player, @Default("1") Integer amount) {
-        onMaterial(player, player.getInventory().getItemInMainHand().getType(), amount);
+        onMaterial(player, OffhandCompat.getItemInMainHand(player).getType(), amount);
     }
 
     @Default
