@@ -1,21 +1,80 @@
 name: Itemshop
 version: @version@
 main: jschars.itemshop.Itemshop
+
+author: chicken_emre
+website: https://www.spigotmc.org/resources/itemshop.85481/
+
 api-version: 1.15
+load: STARTUP
 depend:
   - Vault
+
 commands:
   sell:
     description: Sell items
+    permission: itemshop.sell
   worth:
     description: Calculate the sell worth of items as specified
+    permission: itemshop.sell.worth
   setworth:
     description: Set the bare sell worth of a material
+    permission: itemshop.sell.worth.set
   buy:
     description: Buy items
+    permission: itemshop.buy
   cost:
     description: Calculate the buy cost of items as specified
+    permission: itemshop.buy.cost
   setcost:
     description: Set the bare buy cost of a material
+    permission: itemshop.buy.cost.set
   itemshop:
     description: Reloads the config file
+    permission: itemshop.reload
+
+permissions:
+  itemshop.sell:
+    default: true
+    description: Allows you to use the /sell command
+    children:
+      itemshop.sell.hand:
+        default: true
+        description: Allows you to use the /sell hand command
+      itemshop.sell.inventory:
+        default: true
+        description: Allows you to use the /sell inventory command
+      itemshop.sell.material:
+        default: true
+        description: Allows you to use the /sell command to sell items of specified material
+      itemshop.sell.worth:
+        default: true
+        description: Allows you to use the /worth command
+        children:
+          itemshop.sell.worth.set:
+            default: op
+            description: Allows you to use the /setworth command
+  itemshop.buy:
+    default: true
+    description: Allows you to use the /buy command
+    children:
+      itemshop.buy.hand:
+        default: true
+        description: Allows you to use the /buy hand command
+      itemshop.buy.material:
+        default: true
+        description: Allows you to use the /buy command to buy items of specified material
+      itemshop.buy.cost:
+        default: true
+        description: Allows you to use the /cost command
+        children:
+          itemshop.buy.cost.set:
+            default: op
+            description: Allows you to use the /setcost command
+  itemshop.reload:
+    default: op
+    description: Allows you to use the /itemshop command
+  itemshop.m.<multiplier>:
+    default: false
+  itemshop.m.*:
+    default: false

@@ -21,6 +21,7 @@ public class ReloadCommand extends BaseCommand {
     @Default
     public void onCall(CommandSender sender) {
         plugin.reloadConfig();
+        plugin.registerMultiplierPermissions();
         sender.sendMessage("Reloaded.");
     }
 }
