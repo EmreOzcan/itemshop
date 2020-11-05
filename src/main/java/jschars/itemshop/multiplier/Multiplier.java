@@ -1,8 +1,8 @@
-package jschars.itemshop.classes;
+package jschars.itemshop.multiplier;
 
 import jschars.itemshop.Itemshop;
+import jschars.itemshop.config.MultiplierConfig;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 class Multiplier {
@@ -27,7 +27,7 @@ class Multiplier {
     }
 
     public static void listMultipliers(Player player, Itemshop plugin) {
-        FileConfiguration config = plugin.getConfig();
+        MultiplierConfig config = plugin.getMultiplierConfig();
         SellMultiplier sell = SellMultiplier.best(player, config);
         BuyMultiplier buy = BuyMultiplier.best(player, config);
 

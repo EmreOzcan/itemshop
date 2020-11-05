@@ -4,13 +4,14 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
-import jschars.itemshop.classes.ItemValues;
-import jschars.itemshop.classes.SellMultiplier;
 import jschars.itemshop.compat.OffhandCompat;
+import jschars.itemshop.config.MultiplierConfig;
+import jschars.itemshop.config.ValueConfig;
+import jschars.itemshop.itemdata.ItemValues;
+import jschars.itemshop.multiplier.SellMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 @CommandPermission("itemshop.sell.worth")
@@ -27,13 +28,14 @@ public class WorthCommand extends BaseCommand {
     @CommandCompletion("@itemshop-sellables 1|32|64")
     @Default
     public void onWorth(CommandSender sender, @Optional Material material, @Default("1") Integer amount) {
-        FileConfiguration config = plugin.getConfig();
+        ValueConfig valueConfig = plugin.getValueConfig();
+        MultiplierConfig multiplierConfig = plugin.getMultiplierConfig();
         if (material == null && sender instanceof Player) {
             Player player = (Player) sender;
             material = OffhandCompat.getItemInMainHand(player).getType();
         }
-        ItemValues itemValues = ItemValues.getFor(material, config);
-        SellMultiplier multi = sender instanceof Player ? SellMultiplier.best(((Player) sender), config) : SellMultiplier.unit;
+        ItemValues itemValues = ItemValues.getFor(material, valueConfig);
+        SellMultiplier multi = sender instanceof Player ? SellMultiplier.best(((Player) sender), multiplierConfig) : SellMultiplier.unit;
 
         if (!itemValues.isSellable()) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be sold."));
@@ -58,9 +60,9 @@ public class WorthCommand extends BaseCommand {
     @Subcommand("set")
     @CommandAlias("setworth")
     public void onSetWorth(CommandSender sender, Material material, double worth) {
-        FileConfiguration config = plugin.getConfig();
-        config.set(ItemValues.getWorthPath(material), worth);
-        plugin.saveConfig();
+        ValueConfig config = plugin.getValueConfig();
+        config.getConfig().set(ItemValues.getWorthPath(material), worth);
+        config.saveConfig();
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
                 "&aUpdated the sell worth of &a%s&a to &c$%.2f&a.",
                 material.name(), worth)));

@@ -4,13 +4,12 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
-import jschars.itemshop.classes.ItemValues;
-import jschars.itemshop.classes.SellMultiplier;
 import jschars.itemshop.compat.OffhandCompat;
+import jschars.itemshop.itemdata.ItemValues;
+import jschars.itemshop.multiplier.SellMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -41,8 +40,7 @@ public class SellCommand extends BaseCommand {
     @Description("Sell all sellable items in your inventory")
     public void onInventory(Player player) {
         PlayerInventory inventory = player.getInventory();
-        FileConfiguration config = plugin.getConfig();
-        SellMultiplier multi = SellMultiplier.best(player, config);
+        SellMultiplier multi = SellMultiplier.best(player, plugin.getMultiplierConfig());
 
         int totalItemsSold = 0;
         double totalWorthOfItems = 0.0;
@@ -50,7 +48,7 @@ public class SellCommand extends BaseCommand {
             if (stack == null) {
                 continue;
             }
-            ItemValues itemValues = ItemValues.getFor(stack.getType(), config);
+            ItemValues itemValues = ItemValues.getFor(stack.getType(), plugin.getValueConfig());
             if (!itemValues.isSellable()) {
                 continue;
             }
@@ -80,9 +78,8 @@ public class SellCommand extends BaseCommand {
     @CommandCompletion("@itemshop-sellables 1|32|64")
     public void onMaterial(Player player, Material material, @Default("2147483647") Integer maxAmount) {
         PlayerInventory inventory = player.getInventory();
-        FileConfiguration config = plugin.getConfig();
-        SellMultiplier multi = SellMultiplier.best(player, config);
-        ItemValues itemValues = ItemValues.getFor(material, config);
+        SellMultiplier multi = SellMultiplier.best(player, plugin.getMultiplierConfig());
+        ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
 
         if (!itemValues.isSellable()) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be sold."));

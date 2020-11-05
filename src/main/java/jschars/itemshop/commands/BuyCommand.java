@@ -4,13 +4,12 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
-import jschars.itemshop.classes.BuyMultiplier;
-import jschars.itemshop.classes.ItemValues;
 import jschars.itemshop.compat.OffhandCompat;
+import jschars.itemshop.itemdata.ItemValues;
+import jschars.itemshop.multiplier.BuyMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -52,9 +51,8 @@ public class BuyCommand extends BaseCommand {
     @CommandCompletion("@itemshop-buyables 1|32|64")
     public void onMaterial(Player player, Material material, @Default("1") Integer amount) {
         PlayerInventory inventory = player.getInventory();
-        FileConfiguration config = plugin.getConfig();
-        BuyMultiplier multi = BuyMultiplier.best(player, config);
-        ItemValues itemValues = ItemValues.getFor(material, config);
+        BuyMultiplier multi = BuyMultiplier.best(player, plugin.getMultiplierConfig());
+        ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
 
         if (!itemValues.isBuyable()) {
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be bought."));

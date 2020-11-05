@@ -1,0 +1,18 @@
+# Multipliers for Itemshop - multipliers.yml
+
+# Example: Players with the permission "itemshop.m.free" will buy everything for free.
+# (Item's buy cost is multiplied with "0.0".)
+free: # This is the name used in permissions
+  name: Communism # This is the name used in human readable texts
+  buy: 0.0
+  sell: 0.0
+
+# Another example: Player with the permission "itemshop.m.tax" will sell items for 10% less and buy items for 10% more.
+# (Item's buy cost is multiplied with "1.1" and sell value is multiplied with "0.9".)
+tax:
+  name: Tax
+  sell: 0.9
+  buy: 1.1
+
+# Players without any of these permissions will sell and buy items with the default multiplier of "1.0".
+# If you don't add a sell or buy for a modifier it will be assumed to be 1.

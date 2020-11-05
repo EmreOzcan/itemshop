@@ -1,9 +1,11 @@
 package jschars.itemshop;
 
 import co.aikar.commands.PaperCommandManager;
-import jschars.itemshop.classes.ItemValues;
 import jschars.itemshop.commands.*;
 import jschars.itemshop.compat.MaterialCompat;
+import jschars.itemshop.config.MultiplierConfig;
+import jschars.itemshop.config.ValueConfig;
+import jschars.itemshop.itemdata.ItemValues;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
 import org.bukkit.permissions.Permission;
@@ -29,6 +31,9 @@ public final class Itemshop extends JavaPlugin {
 
     private final Set<Permission> multiPermissions = new HashSet<>();
 
+    private ValueConfig valueConfig;
+    private MultiplierConfig multiplierConfig;
+
     @Override
     public void onDisable() {}
 
@@ -46,11 +51,11 @@ public final class Itemshop extends JavaPlugin {
 
         commandManager.getCommandCompletions().registerCompletion("itemshop-all-items", c -> allItems);
 
-        Stream<ItemValues> itemValuesStream = getConfig().getConfigurationSection("item-worths").getKeys(false).stream()
+        Stream<ItemValues> itemValuesStream = valueConfig.getConfig().getKeys(false).stream()
                 .map(mat -> mat.toUpperCase(Locale.ENGLISH))
                 .map(Material::getMaterial)
                 .filter(Objects::nonNull)
-                .map(mat -> ItemValues.getFor(mat, getConfig()));
+                .map(mat -> ItemValues.getFor(mat, valueConfig));
 
         commandManager.getCommandCompletions().registerCompletion("itemshop-sellables", c ->
                 itemValuesStream
@@ -96,10 +101,32 @@ public final class Itemshop extends JavaPlugin {
         PluginManager pluginManager = getServer().getPluginManager();
         multiPermissions.forEach(pluginManager::removePermission);
         multiPermissions.clear();
-        for (String multi : getConfig().getConfigurationSection("modifiers").getKeys(false)) {
+        for (String multi : multiplierConfig.getConfig().getKeys(false)) {
             Permission permission = new Permission("itemshop.m." + multi, "", PermissionDefault.FALSE);
             multiPermissions.add(permission);
             pluginManager.addPermission(permission);
         }
+    }
+
+    public ValueConfig getValueConfig() {
+        return valueConfig;
+    }
+
+    public MultiplierConfig getMultiplierConfig() {
+        return multiplierConfig;
+    }
+
+    @Override
+    public void reloadConfig() {
+        valueConfig.reloadConfig();
+        multiplierConfig.reloadConfig();
+        super.reloadConfig();
+    }
+
+    @Override
+    public void saveDefaultConfig() {
+        valueConfig = new ValueConfig(this, "item-values.yml");
+        multiplierConfig = new MultiplierConfig(this, "multipliers.yml");
+        //super.saveDefaultConfig();
     }
 }

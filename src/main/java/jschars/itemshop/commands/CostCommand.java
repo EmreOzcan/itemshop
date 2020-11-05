@@ -4,13 +4,13 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import jschars.itemshop.Itemshop;
-import jschars.itemshop.classes.BuyMultiplier;
-import jschars.itemshop.classes.ItemValues;
 import jschars.itemshop.compat.OffhandCompat;
+import jschars.itemshop.config.ValueConfig;
+import jschars.itemshop.itemdata.ItemValues;
+import jschars.itemshop.multiplier.BuyMultiplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 @CommandPermission("itemshop.buy.cost")
@@ -27,13 +27,12 @@ public class CostCommand extends BaseCommand {
     @CommandCompletion("@itemshop-buyables 1|32|64")
     @Default
     public void onCost(CommandSender sender, @Optional Material material, @Default("1") Integer amount) {
-        FileConfiguration config = plugin.getConfig();
         if (material == null && sender instanceof Player) {
             Player player = (Player) sender;
             material = OffhandCompat.getItemInMainHand(player).getType();
         }
-        ItemValues itemValues = ItemValues.getFor(material, config);
-        BuyMultiplier multi = sender instanceof Player ? BuyMultiplier.best(((Player) sender), config) : BuyMultiplier.unit;
+        ItemValues itemValues = ItemValues.getFor(material, plugin.getValueConfig());
+        BuyMultiplier multi = sender instanceof Player ? BuyMultiplier.best(((Player) sender), plugin.getMultiplierConfig()) : BuyMultiplier.unit;
 
         if (!itemValues.isBuyable()) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis item cannot be bought."));
@@ -58,9 +57,9 @@ public class CostCommand extends BaseCommand {
     @Subcommand("set")
     @CommandAlias("setcost")
     public void onSetCost(CommandSender sender, Material material, double cost) {
-        FileConfiguration config = plugin.getConfig();
-        config.set(ItemValues.getCostPath(material), cost);
-        plugin.saveConfig();
+        ValueConfig config = plugin.getValueConfig();
+        config.getConfig().set(ItemValues.getCostPath(material), cost);
+        config.saveConfig();
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(
                 "&aUpdated the buy cost of &a%s&a to &c$%.2f&a.",
                 material.name(), cost)));

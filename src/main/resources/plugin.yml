@@ -1,9 +1,10 @@
 name: Itemshop
-version: @version@
-main: jschars.itemshop.Itemshop
-
+description: Sell and buy system with different prices for different people
 author: chicken_emre
 website: https://www.spigotmc.org/resources/itemshop.85481/
+
+version: @version@
+main: jschars.itemshop.Itemshop
 
 api-version: 1.15
 load: STARTUP
@@ -54,6 +55,7 @@ permissions:
           itemshop.sell.worth.set:
             default: op
             description: Allows you to use the /setworth command
+
   itemshop.buy:
     default: true
     description: Allows you to use the /buy command
@@ -71,6 +73,7 @@ permissions:
           itemshop.buy.cost.set:
             default: op
             description: Allows you to use the /setcost command
+
   itemshop.reload:
     default: op
     description: Allows you to use the /itemshop command

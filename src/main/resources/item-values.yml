@@ -1,0 +1,18 @@
+# Item values for Itemshop - item-values.yml
+
+# Example: Players can sell stone for 0.8 each and buy it for 1.0 each.
+stone:
+  sell: 0.8
+  buy: 1.0
+
+# Example: Players can sell diorite for 3 but they cannot buy it.
+diorite:
+  sell: 3.0
+  buy:
+
+# Example: Players can buy andesite for 7 each but they cannot sell it.
+andesite:
+  sell:
+  buy: 7.0
+
+# Items not here cannot be sold or bought by default.

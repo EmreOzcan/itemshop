@@ -1,7 +1,8 @@
-package jschars.itemshop.classes;
+package jschars.itemshop.itemdata;
 
+import jschars.itemshop.config.ValueConfig;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.Locale;
 
@@ -40,7 +41,8 @@ public class ItemValues {
         this.buyCost = buyCost;
     }
 
-    public static ItemValues getFor(Material item, FileConfiguration config) {
+    public static ItemValues getFor(Material item, ValueConfig valueConfig) {
+        YamlConfiguration config = valueConfig.getConfig();
         String worthPath = getWorthPath(item);
         boolean sellable = config.isDouble(worthPath);
         double worth = sellable ? config.getDouble(worthPath) : 0;
@@ -53,10 +55,10 @@ public class ItemValues {
     }
 
     public static String getCostPath(Material material) {
-        return String.format("item-worths.%s.buy", material.toString().toLowerCase(Locale.ENGLISH));
+        return String.format("%s.buy", material.toString().toLowerCase(Locale.ENGLISH));
     }
 
     public static String getWorthPath(Material material) {
-        return String.format("item-worths.%s.sell", material.toString().toLowerCase(Locale.ENGLISH));
+        return String.format("%s.sell", material.toString().toLowerCase(Locale.ENGLISH));
     }
 }
