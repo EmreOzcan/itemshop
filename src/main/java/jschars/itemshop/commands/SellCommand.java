@@ -77,7 +77,7 @@ public class SellCommand extends BaseCommand {
     @Subcommand("material")
     @CommandPermission("itemshop.sell.material")
     @Description("Sell items of the type you specified")
-    @CommandCompletion("@itemMaterials 1|32|64")
+    @CommandCompletion("@itemshop-sellables 1|32|64")
     public void onMaterial(Player player, Material material, @Default("2147483647") Integer maxAmount) {
         PlayerInventory inventory = player.getInventory();
         FileConfiguration config = plugin.getConfig();

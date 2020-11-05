@@ -24,7 +24,7 @@ public class CostCommand extends BaseCommand {
 
     @CommandPermission("itemshop.buy.cost")
     @Description("See the buy cost of a material")
-    @CommandCompletion("@itemMaterials 1|32|64")
+    @CommandCompletion("@itemshop-buyables 1|32|64")
     @Default
     public void onCost(CommandSender sender, @Optional Material material, @Default("1") Integer amount) {
         FileConfiguration config = plugin.getConfig();
@@ -54,7 +54,7 @@ public class CostCommand extends BaseCommand {
 
     @CommandPermission("itemshop.buy.cost.set")
     @Description("Set the bare buy cost of a material")
-    @CommandCompletion("@itemMaterials 1.00|1.50|75")
+    @CommandCompletion("@itemshop-all-items 1.00|1.50|75")
     @Subcommand("set")
     @CommandAlias("setcost")
     public void onSetCost(CommandSender sender, Material material, double cost) {

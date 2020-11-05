@@ -49,7 +49,7 @@ public class BuyCommand extends BaseCommand {
     @Default
     @CommandPermission("itemshop.buy.material")
     @Description("Buy items of the type you specified")
-    @CommandCompletion("@itemMaterials 1|32|64")
+    @CommandCompletion("@itemshop-buyables 1|32|64")
     public void onMaterial(Player player, Material material, @Default("1") Integer amount) {
         PlayerInventory inventory = player.getInventory();
         FileConfiguration config = plugin.getConfig();

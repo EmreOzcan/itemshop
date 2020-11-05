@@ -24,7 +24,7 @@ public class WorthCommand extends BaseCommand {
 
     @CommandPermission("itemshop.sell.worth")
     @Description("See the sell worth of a material")
-    @CommandCompletion("@itemMaterials 1|32|64")
+    @CommandCompletion("@itemshop-sellables 1|32|64")
     @Default
     public void onWorth(CommandSender sender, @Optional Material material, @Default("1") Integer amount) {
         FileConfiguration config = plugin.getConfig();
@@ -54,7 +54,7 @@ public class WorthCommand extends BaseCommand {
 
     @CommandPermission("itemshop.sell.worth.set")
     @Description("Set the bare sell worth of a material")
-    @CommandCompletion("@itemMaterials 1.00|1.50|75")
+    @CommandCompletion("@itemshop-all-items 1.00|1.50|75")
     @Subcommand("set")
     @CommandAlias("setworth")
     public void onSetWorth(CommandSender sender, Material material, double worth) {
