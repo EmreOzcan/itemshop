@@ -101,7 +101,7 @@ Requirements:
 * Gradle
 * JDK 1.8 or later
 
-1. Obtain the source code. Clone the git repo using `git clone git@git.sr.ht:~emre/itemshop`
+1. Obtain the source code. Clone the git repo using `git clone git@github.com:EmreOzcan/itemshop.git`
 2. Issue the following command: `gradle build`
 
 The built plugin will be placed in `./build/libs/itemshop-<version>-all.jar`
