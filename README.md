@@ -4,49 +4,162 @@
 
 ### Syntax of the `/buy` Command
 All subcommands explained below require the `itemshop.buy` permission node.
-| command syntax | description | permission node |
-|----|----|----|
-| `help` | Show help for buy ||
-| `hand [Integer amount (1)]` | Buy items of the type you're currently holding | `itemshop.buy.hand` |
-| `<Material material> [Integer amount (1)]` | Buy items of the type you specified | `itemshop.buy.material` |
-| `multipliers` | See active multipliers | `itemshop.multipliers` |
+<table>
+    <thead>
+        <tr>
+            <th>command syntax</th>
+            <th>description</th>
+            <th>permission node</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>help</code></td>
+            <td>Show help for buy</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>hand [Integer amount (1)]</code></td>
+            <td>Buy items of the type you're currently holding</td>
+            <td><code>itemshop.buy.hand</code></td>
+        </tr>
+        <tr>
+            <td><code>&lt;Material material&gt; [Integer amount (1)]</code></td>
+            <td>Buy items of the type you specified</td>
+            <td><code>itemshop.buy.material</code></td>
+        </tr>
+        <tr>
+            <td><code>multipliers</code></td>
+            <td>See active multipliers</td>
+            <td><code>itemshop.multipliers</code></td>
+        </tr>
+    </tbody>
+</table>
 
 ### Syntax of the `/cost` Command
 All subcommands explained below require the `itemshop.buy.cost` permission node.
-| command syntax | description | permission node |
-|----|----|----|
-| `help` | Show help for cost ||
-| `[Material material (*)] [Integer amount (1)]` | See the buy cost of a material | `itemshop.buy.cost` |
-| `set <Material material> <double cost>` or `/setcost ...` | Set the bare buy cost of a material | `itemshop.buy.cost.set` |
+<table>
+    <thead>
+        <tr>
+            <th>command syntax</th>
+            <th>description</th>
+            <th>permission node</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>help</code></td>
+            <td>Show help for cost</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>[Material material (*)] [Integer amount (1)]</code></td>
+            <td>See the buy cost of a material</td>
+            <td><code>itemshop.buy.cost</code></td>
+        </tr>
+        <tr>
+            <td><code>set &lt;Material material&gt; &lt;double cost&gt;</code> or <code>/setcost ...</code></td>
+            <td>Set the bare buy cost of a material</td>
+            <td><code>itemshop.buy.cost.set</code></td>
+        </tr>
+    </tbody>
+</table>
 
 \*: If omitted and the command issuer is a player, `material` will be the type of the item the player is currently holding.
 
 ### Syntax of the `/sell` Command
 All subcommands explained below require the `itemshop.sell` permission node.
-| command syntax | description | permission node |
-|----|----|----|
-| `` or `help` | Show help for sell ||
-| `all\|inventory` | Sell all sellable items in your inventory | `itemshop.sell.inventory` |
-| `hand [Integer maxAmount (2147483647)]` | Sell items of the type you're currently holding | `itemshop.sell.hand` |
-| `material <Material material> [Integer maxAmount (2147483647)]` | Sell items of the type you specified | `itemshop.sell.material` |
-| `multipliers` | See active multipliers | `itemshop.multipliers` |
-| `<query>` | Search results for `query` ||
+<table>
+    <thead>
+        <tr>
+            <th>command syntax</th>
+            <th>description</th>
+            <th>permission node</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>`` or <code>help</code></td>
+            <td>Show help for sell</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>all|inventory</code></td>
+            <td>Sell all sellable items in your inventory</td>
+            <td><code>itemshop.sell.inventory</code></td>
+        </tr>
+        <tr>
+            <td><code>hand [Integer maxAmount (2147483647)]</code></td>
+            <td>Sell items of the type you're currently holding</td>
+            <td><code>itemshop.sell.hand</code></td>
+        </tr>
+        <tr>
+            <td><code>material &lt;Material material&gt; [Integer maxAmount (2147483647)]</code></td>
+            <td>Sell items of the type you specified</td>
+            <td><code>itemshop.sell.material</code></td>
+        </tr>
+        <tr>
+            <td><code>multipliers</code></td>
+            <td>See active multipliers</td>
+            <td><code>itemshop.multipliers</code></td>
+        </tr>
+        <tr>
+            <td><code>&lt;query&gt;</code></td>
+            <td>Search results for <code>query</code></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
 
 ### Syntax of the `/worth` Command
 All subcommands explained below require the `itemshop.sell.worth` permission node.
-| command syntax | description | permission node |
-|----|----|----|
-| `help` | Show help for worth ||
-| `[Material material (*)] [Integer amount (1)]` | See the sell worth of a material | `itemshop.sell.worth` |
-|  `set <Material material> <double worth>` or `/setworth ...` | Set the bare sell worth of a material | `itemshop.sell.worth.set` |
+<table>
+    <thead>
+        <tr>
+            <th>command syntax</th>
+            <th>description</th>
+            <th>permission node</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>help</code></td>
+            <td>Show help for worth</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><code>[Material material (*)] [Integer amount (1)]</code></td>
+            <td>See the sell worth of a material</td>
+            <td><code>itemshop.sell.worth</code></td>
+        </tr>
+        <tr>
+            <td><code>set &lt;Material material&gt; &lt;double worth&gt;</code> or <code>/setworth ...</code></td>
+            <td>Set the bare sell worth of a material</td>
+            <td><code>itemshop.sell.worth.set</code></td>
+        </tr>
+    </tbody>
+</table>
 
 \*: If omitted and the command issuer is a player, `material` will be the type of the item the player is currently holding.
 
 ### Synax of the `/itemshop` Command
 All subcommands explained below require the `itemshop.reload` permission node.
-| command syntax | description | permission node |
-|----|----|----|
-|| Reloads the config file | `itemshop.reload` |
+<table>
+    <thead>
+        <tr>
+            <th>command syntax</th>
+            <th>description</th>
+            <th>permission node</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>Reloads the config file</td>
+            <td><code>itemshop.reload</code></td>
+        </tr>
+    </tbody>
+</table>
 
 ## Default Configuration Files
 
@@ -101,7 +214,6 @@ Requirements:
 * Gradle
 * JDK 1.8 or later
 
-1. Obtain the source code. Clone the git repo using `git clone git@github.com:EmreOzcan/itemshop.git`
-2. Issue the following command: `gradle build`
+Issue the command `gradle build`
 
 The built plugin will be placed in `./build/libs/itemshop-<version>-all.jar`
